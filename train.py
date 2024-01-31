@@ -58,8 +58,8 @@ def seed_worker(_worker_id):
 
 
 def train(
-        data_dir: str,
         output_dir: str,
+        data_dir: str = 'data',
         lr: float = 2e-4,
         batch_size: int = 128,
         eval_batch_size: int = 256,

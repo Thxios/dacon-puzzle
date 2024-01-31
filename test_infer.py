@@ -25,7 +25,7 @@ def get_model(ckpt):
 
 def main(
         ckpt_path: str,
-        data_dir: str,
+        data_dir: str = 'data',
         output_dir: str = 'logits',
         csv_name: str = 'test.csv',
         device: str = 'cuda',
