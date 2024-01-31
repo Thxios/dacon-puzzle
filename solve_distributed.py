@@ -12,13 +12,11 @@ from solver import Solver
 from patch_util import *
 
 
-
 @ray.remote
 def solve_single(idx, logit_npy_path, max_branches=4):
     logit = np.load(logit_npy_path)
     n_true = int(np.sum(logit > 0))
     logit = logit.reshape((n_patches, n_patches, 2))
-
 
     if n_true >= 50:
         max_branches = max(max_branches - 1, 2)
@@ -26,7 +24,6 @@ def solve_single(idx, logit_npy_path, max_branches=4):
     order, log_prob = solver.solve()
 
     order_ret = [order.index(i) + 1 for i in range(n_patches)]
-
     ret = dict(
         idx=idx,
         order=order_ret,
@@ -34,7 +31,6 @@ def solve_single(idx, logit_npy_path, max_branches=4):
         n_true=n_true,
         cnt=solver.cnt,
     )
-
     return ret
 
 
@@ -42,9 +38,6 @@ def jobs_to_iterator(job_ids):
     while job_ids:
         done, job_ids = ray.wait(job_ids)
         yield ray.get(done[0])
-
-
-
 
 
 def main(
@@ -59,9 +52,6 @@ def main(
         logit_list = logit_list[:maximum]
     print(len(logit_list))
 
-    # ret = solve_single(3937, logit_list[3937])
-    # print(ret)
-
     ray.init(num_cpus=num_cpus)
 
     jobs = []
@@ -73,7 +63,6 @@ def main(
         for ret in tqdm.tqdm(iterator, total=len(logit_list)):
             f.write(json.dumps(ret) + '\n')
             f.flush()
-
 
 
 def solve_confusing(
