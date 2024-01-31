@@ -25,8 +25,8 @@ def get_model(ckpt):
 
 def main(
         ckpt_path: str,
+        data_dir: str,
         output_dir: str = 'logits',
-        data_dir: str = '../dacon-puzzle/data',
         csv_name: str = 'test.csv',
         device: str = 'cuda',
 ):
@@ -51,8 +51,6 @@ def main(
             out_np = out.squeeze().cpu().numpy()
             rets.append(out_np)
             np.save(os.path.join(output_dir, f'{i:05d}.npy'), out_np)
-    # rets = np.concatenate(rets, axis=0)
-    # np.save(os.path.join(output_dir, 'logit_all.npy'), rets)
 
 
 

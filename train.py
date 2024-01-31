@@ -31,10 +31,6 @@ def get_dataset(data_dir, test_size=0.1, seed=42):
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
-    # train_transform = T.Compose([
-    #     T.RandomHorizontalFlip(),
-    #     transform
-    # ])
 
     train_ds = TrainDataset(train_df, base_dir=data_dir, transform=transform)
     val_ds = ValidDataset(val_df, base_dir=data_dir, transform=transform)
@@ -43,8 +39,6 @@ def get_dataset(data_dir, test_size=0.1, seed=42):
 
 
 def get_model():
-    # model = mobilenet_v3_small(weights=MobileNet_V3_Small_Weights.DEFAULT)
-    # model.classifier[-1] = nn.Linear(1024, 1)
     model = mobilenet_v3_large(weights=MobileNet_V3_Large_Weights.DEFAULT)
     model.classifier[-1] = nn.Linear(1280, 1)
     return model
@@ -87,14 +81,12 @@ def train(
         shuffle=True,
         drop_last=True,
         num_workers=4,
-        # pin_memory=True,
         worker_init_fn=seed_worker
     )
     val_loader = DataLoader(
         val_ds,
         batch_size=eval_batch_size,
         num_workers=2,
-        # pin_memory=True,
     )
 
 
