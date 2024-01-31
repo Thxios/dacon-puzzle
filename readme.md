@@ -1,6 +1,15 @@
 
 ## dacon puzzle
 
+source code for [dacon puzzle competition](https://dacon.io/competitions/official/236207)
+
+
+### reproduce
+install dependencies
+```shell
+pip3 install -r requirements.txt
+```
+
 train
 ```shell
 python3 train.py [OUTPUT_DIR] [DATA_DIR]
